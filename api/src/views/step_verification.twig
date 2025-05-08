@@ -1,0 +1,113 @@
+{% extends "layouts/base.twig" %}
+
+{% block title %}Verificacion
+{% endblock %}
+
+{% block content %}
+	<div class="container d-flex justify-content-center align-items-center vh-100">
+		<div class="text-center" style="width: 100%; max-width: 400px;">
+
+			<h2 class="mb-3">Verificacion de correo</h2>
+			<p>Ingrese el codigo enviado por correos</p>
+
+			<form id="register2" method="POST" action="/verificacion-2">
+
+				<input name="csrf" type="hidden" value="{{ csrf }}"/>
+				<input name="token" type="hidden" value="{{ jwt }}"/>
+
+				<div class="d-flex justify-content-center mb-4">
+					<input name="code_1" type="text" maxlength="1" class="code-input" id="input1">
+					<input name="code_2" type="text" maxlength="1" class="code-input" id="input2">
+					<input name="code_3" type="text" maxlength="1" class="code-input" id="input3">
+					<input name="code_4" type="text" maxlength="1" class="code-input" id="input4">
+				</div>
+
+				<button type="submit" class="btn btn-gradient w-100 mb-3">Verificar</button>
+
+			</form>
+
+			<p class="mt-2">¿No tiene el codigo en la bandeja de correos?
+				<a href="#" class="text-decoration-none text-primary">Reenviar</a>
+			</p>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        let code_email = "{{ code }}"
+
+        if (code_email) {
+
+            code_email = extractNumbersAsSingleLine(code_email)
+
+            let array_code = code_email.split("")
+
+            document.querySelector("#input1").value = array_code[0]
+            document.querySelector("#input2").value = array_code[1]
+            document.querySelector("#input3").value = array_code[2]
+            document.querySelector("#input4").value = array_code[3]
+        }
+
+
+        const inputs = document.querySelectorAll(".code-input");
+
+        inputs.forEach((input, index) => {
+
+        input.addEventListener("input", (e) => {
+            const value = e.target.value;
+                if (/^\d$/.test(value)) {
+                    if (index < inputs.length - 1) {inputs[index + 1].focus();}
+                } else {
+                    e.target.value = "";
+                }
+        });
+
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !input.value && index > 0) {
+            inputs[index - 1].focus();
+        }
+        });
+
+        input.addEventListener("focus", (e) => {
+            if (!input.value && index > 0 && ! inputs[index - 1].value) {
+            inputs[index - 1].focus();
+        }
+        });
+        });
+
+        inputs[0].addEventListener("paste", (e) => {
+        const clipboardData = e.clipboardData || window.clipboardData;
+        const pastedData = extractNumbersAsSingleLine(clipboardData.getData("Text"));
+
+
+        if (/^\d{4}$/.test(pastedData)) {
+            
+        pastedData.split("").forEach((char, i) => {
+        if (inputs[i]) {
+        inputs[i].value = char;
+        }
+        });
+            inputs[inputs.length - 1].focus();
+        } else {
+            e.preventDefault();
+        }
+        });
+
+
+           onSendFormPost("#register2" , (data)=>{ 
+                if(data.code == 200){
+
+                    console.log(data.data.url)
+                    if(data.data.url) window.location.href = data.data.url;
+                }
+                
+            });
+    });
+</script>
+{% endblock %}

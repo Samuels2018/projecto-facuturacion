@@ -1,0 +1,32 @@
+<?php
+//header('Content-Type: text/html; charset=utf-8');
+   session_start();
+   require('../../conf/conf.php'); 
+   
+   
+   
+   $term = trim(strip_tags($_GET['term'])); 
+   
+   if ($_GET['cliente']==1){ $tipo=" and cliente = 1 ";}
+   if ($_GET['proveedor']==1){ $tipo=" and proveedor = 1 ";}
+   
+   $sql="Select rowid, nombre, apellidos    from fi_terceros  where entidad = ".$_SESSION['Entidad']. $tipo ." AND
+    (CONCAT(nombre,' ',apellidos) LIKE '%".$term."%')  or cedula LIKE '%".$term."%'  limit 0,10  "; 
+   $db=$dbh->prepare($sql);
+   $db->execute();
+
+                     
+					     
+
+     while($obj=$db->fetch(PDO::FETCH_ASSOC)){
+	
+	$row['value']=(''.ucwords(strtolower($obj['nombre']))." ".ucwords(strtolower($obj['apellidos'])));
+	$row['id']=(int)$obj['rowid'];
+	$row_set[] = $row; 
+									 
+	}
+
+
+echo json_encode($row_set);
+
+?>

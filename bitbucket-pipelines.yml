@@ -1,0 +1,22 @@
+image: atlassian/default-image:2
+
+pipelines:
+  branches:
+    stage-europa:
+      - step:
+          name: Deploy to Stage
+          script:
+            - echo "Desplegando en el ambiente de stage"
+            - ssh root@dev.factuguay.es "cd /home/bitbucket/htdocs/stage.factuguay.es && git config --global --add safe.directory /home/factuguay-stage/htdocs/stage.factuguay.es && git pull origin stage-europa && systemctl restart nginx"
+    develop-europa:
+      - step:
+          name: Deploy to Development Europa
+          script:
+            - echo "Desplegando en el ambiente de develop europa"
+            - ssh root@dev.factuguay.es "cd /home/factuguay-dev/htdocs/dev.factuguay.es && git config --global --add safe.directory /home/factuguay-dev/htdocs/dev.factuguay.es && git pull origin develop-europa && systemctl restart nginx"
+    main-europa:
+      - step:
+          name: Deploy to Main Europa
+          script:
+            - echo "Desplegando en el ambiente de produccion europa"
+            - ssh root@sistema.factuguay.es "cd /home/sistema/htdocs/sistema.avantecds.es && git config --global --add safe.directory /home/sistema/htdocs/sistema.avantecds.es && git pull origin main-europa && systemctl restart nginx"

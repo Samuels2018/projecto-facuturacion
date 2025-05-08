@@ -1,0 +1,71 @@
+{% extends "layouts/base.twig" %}
+
+{% block title %}Nuevo Usuario{% endblock %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px;">
+        <h4 class="text-center mb-4">Registro</h4>
+        <form id="register" method="POST" action="/registrar">
+            <input name="csrf" type="hidden" value="{{ csrf }}"/>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre </label>
+                <input type="text"  name="nombre" required class="form-control" id="name" placeholder="Nombre">
+            </div>
+              <div class="mb-3">
+                <label name="nombre"   for="name" class="form-label">Apellido </label>
+                <input name="apellido" required type="text" class="form-control" id="apellido" placeholder="Apellido">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo</label>
+                <input name="correo" required type="email" class="form-control" id="email" placeholder="Correo">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Repetir Correo</label>
+                <input name="correo2" required type="email" class="form-control" id="email_2" placeholder="Correo">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Clave</label>
+                <input name="clave" required type="password" class="form-control" id="password" placeholder="Clave">
+            </div>
+            <div class="form-check mb-3">
+                <input required name="terminos_y_condiciones" type="checkbox" class="form-check-input" id="terms">
+                <label class="form-check-label" for="terms">Yo acepto <a  target="_blank" href="/terminos-y-condiciones">Los Terminos y Condiciones</a></label>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 btn-gradient">Registrarse</button>
+        </form>
+
+        <div class="text-center mt-4">
+            <h6 class="fw-bold">Tienes Preguntas</h6>
+            <p>WHATSAPP +34630167488 <br> hola@factgua.es <br> +923010101</p>
+            <p>¿Ya tienes cuenta? <a href="{{ enlace_web }}">Iniciar Sesión</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+    var message = "{{ message }}"
+
+    if(message){
+        if(message == "Expired token"){
+            showErrorToast("Expiro la session")
+        }
+    }
+    
+    onSendFormPost("#register" , (data)=>{
+    
+        
+        if(data.code == 200){
+            if(data.data.url) window.location.href = data.data.url;
+        }
+        
+    })
+</script>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+@url_api = http://localhost:8060/sistemalog/
+
+
+###Consulta
+GET {{url_api}}/index.php?action=consultarlog&fecha_inicio=2024-11-01&fecha_fin=2024-11-18&usuario=user1
+
+
+###Creacion
+
+POST {{url_api}}/index.php?action=crearlog
+Content-Type: application/json
+
+{
+    "tipo": "error",
+    "usuario": "user1",
+    "ip": "192.168.1.1",
+    "fecha": "2024-11-17 10:00:00",
+    "clase": "LogClass",
+    "error": "Some error",
+    "entidad": "Empresa1"
+}

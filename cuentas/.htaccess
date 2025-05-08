@@ -1,0 +1,18 @@
+
+RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteRule ^salir/?$                        mod_login/ajax/logout.php
+RewriteRule ^login/?$                        login.php
+
+
+
+#Mod Kit Digital
+RewriteRule ^kit_digital_listado/?$  dashboard.php?accion=kit_digital_listado
+RewriteRule ^nuevo_kit_digital/?$  dashboard.php?accion=nuevo_kit_digital
+RewriteRule ^editar_kit_digital/(\w+)/?$  dashboard.php?accion=editar_kit_digital&fiche=$1
+
+
+#ADJUNTOS
+RewriteRule ^servir_adjuntos_cuentas/?$  mod_adjuntos_cuentas/servir_adjuntos_cuentas.php

@@ -1,0 +1,171 @@
+ body {
+    background-color: #f4f7f9;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ .container-fluid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    max-width: 100%;
+    padding: 0;
+}
+ .left-panel, .right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+}
+ .left-panel {
+    background-color: #172b4d;
+    color: #fff;
+    text-align: center;
+    max-width: 30%;
+}
+ .right-panel {
+    background-color: #fff;
+    text-align: center;
+    width: 70%;
+}
+ .left-panel h2, .right-panel h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+ .left-panel p, .right-panel p {
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+ .left-panel img {
+    max-width: 160px;
+    margin-bottom: 10px;
+}
+ .form-control {
+    margin-bottom: 15px;
+}
+ .btn-primary {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+ .btn-primary:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+ .or-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+ .or-divider::before, .or-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+ .or-divider::before {
+    margin-right: .25em;
+}
+ .or-divider::after {
+    margin-left: .25em;
+}
+ .custom-select {
+    width: 80px;
+}
+.logo-svg{
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(380%);
+      max-width: 50px;
+}
+ @media (max-width: 768px) {
+     .left-panel, .right-panel {
+         width: 100%;
+         padding: 20px;
+    }
+     .left-panel {
+         order: 2;
+    }
+}
+ .intl-tel-input.separate-dial-code .selected-dial-code {
+     display: table-cell !important;
+     vertical-align: middle !important;
+     padding-left: 10px !important;
+}
+ .spinner {
+     display: none;
+     width: 40px;
+     height: 40px;
+     border: 4px solid rgba(0, 0, 0, .1);
+     border-radius: 50%;
+     border-left-color: #4CAF50;
+     animation: spin 1s linear infinite;
+     margin: 20px auto;
+}
+ @keyframes spin {
+     0% {
+         transform: rotate(0deg);
+    }
+     100% {
+         transform: rotate(360deg);
+    }
+}
+ .loading {
+     pointer-events: none;
+     opacity: 0.6;
+}
+
+
+    .password-requirements {
+        list-style: none;
+        padding: 15px;
+        font-size: 14px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 10px;
+        text-align: left;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .password-requirements li {
+        color: #a1a1a1;
+        padding: 5px 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .password-requirements li.valid {
+        color: #4CAF50;
+    }
+
+    .password-requirements li.valid::before {
+        content: "\f00c"; /* FontAwesome check icon */
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 10px;
+    }
+
+    .password-requirements li.invalid::before {
+        content: "\f00d"; /* FontAwesome times icon */
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        margin-right: 10px;
+    }
+
+    .toggle-password {
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .position-relative {
+        position: relative;
+    }
+
+

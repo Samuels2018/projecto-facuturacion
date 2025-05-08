@@ -1,0 +1,26 @@
+@url_api=https://qr-dev.factuguay.es/qr_aeat.php
+
+### ValidarQR
+POST {{url_api}}
+
+{
+    "param_nif": "89890001K",
+    "param_serie" : "P@ssw0rd",
+    "param_fecha" : "01-01-2024",
+    "param_importe" : 241.4,
+    "param_logo" : "https://www.avantecds.com/wp-content/uploads/2023/02/avantec-2023.png",
+    "param_formato": "json"
+}
+
+
+
+### GenerarQR
+POST {{url_api}}
+
+{
+    "param_nif": "89890001K",
+    "param_serie" : "P@ssw0rd",
+    "param_fecha" : "01-01-2024",
+    "param_importe" : 241.4,
+    "param_logo" : "https://www.avantecds.com/wp-content/uploads/2023/02/avantec-2023.png"
+}

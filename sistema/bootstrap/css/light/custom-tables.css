@@ -1,0 +1,72 @@
+/* Estilos generales de la tabla */
+table {
+ width: 100%;
+ border-collapse: collapse;
+}
+
+th, td {
+ border: 1px solid #ddd;
+ padding: 8px;
+ text-align: left;
+}
+
+/* Estilos para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+ table, thead, tbody, th, td, tr {
+    display: block;
+ }
+
+ /* Ocultar las celdas de encabezado */
+ thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+ }
+
+ tr {
+    margin-bottom: 10px;
+ }
+
+ td {
+    /* Mostrar el atributo data-label como etiqueta */
+    position: relative;
+    padding-left: 50%;
+    /* Asegurarse de que el contenido de la celda tenga un margen adecuado */
+    margin-left: 0;
+    /* Limitar la altura de las celdas y permitir que el texto se desborde */
+    max-height: 40px; /* Ajustar según sea necesario */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Número de líneas que se mostrarán */
+    -webkit-box-orient: vertical;
+ }
+
+ td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%; /* Ajustar el ancho según sea necesario */
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-label);
+    font-weight: bold;
+    /* Añadir un margen derecho para separar el texto de la etiqueta del contenido de la celda */
+    margin-right: 10px;
+ }
+
+ .table td::before {
+     text-align: left;
+ }
+ .table td {
+    white-space: normal; /* Permitir que el texto se ajuste a nuevas líneas */
+    word-wrap: break-word; /* Asegurar que las palabras largas se rompan y se ajusten */
+    max-width: 100%; /* Asegurar que la celda no exceda el ancho disponible */
+    text-align: right;
+
+
+    display: block; /* Hacer que cada celda se muestre como un bloque */
+    padding-left: 50%; /* Espacio a la izquierda para acomodar el data-label */
+    position: relative; 
+ }
+}

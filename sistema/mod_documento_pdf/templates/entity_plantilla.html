@@ -1,0 +1,111 @@
+<table>
+     <tr>
+          <td style="text-align:left;" width="630px">
+               <p class="color_principal" style="font-size:35px;margin-bottom:0px;">{{documento_tipo}} {{documento_numero}}</p>
+          </td>
+          <td style="text-align:right;"  width="70px">
+               {{qr}}
+          </td>
+     </tr>
+</table>
+<hr class="color_secundario">
+<table  class="tabla_cabecera" border=0>
+     <tr>
+          <td width="50%">
+               <span class="texto-negrita color_principal">FECHA:</span>
+               <br>{{documento_fecha}}
+               <br>
+               <br>
+               <span class="texto-negrita color_principal">DE:</span>
+               <br>{{empresa_razonsocial}}
+               <br>{{empresa_nombre_comercial}}
+               <br>{{empresa_nif}}
+               <br>{{empresa_telefono}}
+               <br>{{empresa_correo}}
+               <br>{{empresa_direccion}}
+          </td>
+          <td width="50%" style="vertical-align: baseline;">
+               <span class="texto-negrita color_principal">PARA: </span>
+               <br>{{cliente_nombre}}
+               <br>{{cliente_nif}}
+               <br>{{cliente_telefono}}
+               <br>{{cliente_email}}
+               <br>{{cliente_direccion}}
+          </td>
+     </tr>
+</table>
+
+
+<table class='tabla2'>
+     <thead >
+     <tr>
+               <th style="text-align:center;">PROYECTO</th>
+               <th style="text-align:center">TRABAJO</th>
+               <th style="text-align:center">CONDICIONES <br>DE PAGO</th>
+               <th style="text-align:center">FECHA DE <br>VENCIMIENTO</th>
+     </tr>
+     </thead>
+     <tbody>
+          <tr >
+               <td width="28%" style="border:1px solid #82b29c;border-bottom:3px solid #82b29c;" class="color_tercero">{{documento_proyecto}}</td>
+               <td width="28%" style="border:1px solid #82b29c;border-bottom:3px solid #82b29c;" class="color_tercero"></td>
+               <td width="28%" style="border:1px solid #82b29c;border-bottom:3px solid #82b29c;" class="color_tercero">{{documento_formapago}}</td>
+               <td width="16%" style="text-align:center; border:1px solid #82b29c;border-bottom:3px solid #82b29c;" class="color_tercero">
+                    {{documento_vencimiento}}
+               </td>
+          </tr>
+    <tbody>
+</table>
+
+<br>
+<br>
+<div style='position: fixed; top: 112; left: -15; rotate: -90; text-align: left; width: 100%; font-size: 12px; border:1px solid;padding:5px;margin-left:-30px;'>
+     {{texto_lateral}}
+</div>
+<table class='tabla3' >
+     <thead>
+          <tr>
+               <th width='10%' style='text-align:center'>CANT.</th>
+               <th width='40%' style='text-align:center'>DESCRIPCIÓN</th>
+               <th style='text-align:center'>PRECIO POR UNIDAD</th>
+               <th style='text-align:center'>DESCUENTO</th>
+               <th style='text-align:center'>IMPUESTOS</th>
+               <th style='text-align:center'>TOTAL DE LÍNEA</th>
+          </tr>
+     </thead>
+     <tbody>
+          {{documento_detalle}}
+          {{documento_adicionales}}
+          
+          <tr>
+               <td colspan=5 style='text-align:right;font-weight:bold'>BASE IMPONIBLE</td>
+               <td style='text-align:right;border:1px solid #82b29c;border-bottom:3px solid #82b29c;' >{{documento_subtotal_pre_retencion}}</td>
+          </tr>
+          
+          {{documento_irpf}}
+          
+          {{documento_ivas}}
+
+          {{documento_re}}
+
+          <tr>
+               <td colspan=5 style='text-align:right;font-weight:bold'>TOTAL</td>
+               <td style='text-align:right;border:1px solid #82b29c;border-bottom:3px solid #82b29c;'>{{documento_total}}</td>
+          </tr>
+
+     </tbody>
+</table>
+
+<div>
+     Contacto: {{documento_dato_contacto}}
+</div>
+
+<div class='observaciones'>
+     <span class='texto-negrita'>Número de Cuenta: {{documento_nro_cuenta}}</span>
+</div>
+{{footer_detalle}}
+<div class="observaciones">
+     <p>
+          {{footer_text}}
+     </p>
+</div>

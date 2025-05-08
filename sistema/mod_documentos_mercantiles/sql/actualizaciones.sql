@@ -1,0 +1,4 @@
+
+Al crear una empresa
+fi_configuracion
+transacciones_fk_moneda

@@ -1,0 +1,19 @@
+{
+    "name": "rojasarmando/migrations",
+    "authors": [
+        {
+            "name": "Armando Rojas",
+            "email": "34174895+rojasarmando@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "robmorgan/phinx": "^0.16.5",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+             "Template\\": "template/",
+             "DB\\": "db/"
+        }
+    }
+}

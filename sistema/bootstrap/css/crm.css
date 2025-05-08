@@ -1,0 +1,53 @@
+/*
+    Estilos para el menu Flotante principal dentro del dashboard
+*/
+     /* Ocultamos el menú inicialmente */
+     .custom-menu-flotante .custom-dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 45px;
+        right: 250px;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1), 0px -4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        width: 350px;
+        border-radius: 10px;
+    }
+
+ 
+
+    /* Estilo de los iconos y texto */
+    .custom-menu-item {
+        text-align: center;
+        margin: 15px 0;
+        width: 80px;
+    }
+
+    .custom-menu-item.activo a{
+        color:#4361EE !important;
+        font-weight: bold;
+    }
+
+    .custom-menu-item i {
+        font-size: 24px;
+        display: block;
+    }
+
+    .custom-menu-item span {
+        display: block;
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+.custom-menu-icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Asegura que el li no cambie de tamaño al desplegar el menú */
+.custom-nav-tem {
+    position: relative;
+}

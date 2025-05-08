@@ -1,0 +1,253 @@
+<?php
+
+if (PHP_SAPI !== 'cli') {
+    header("location: /sistema");
+}
+
+$path = './Bases De Datos/migraciones';
+
+function getRealIP()
+{
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        return $_SERVER['HTTP_CLIENT_IP'];
+    }
+
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+
+    return $_SERVER['REMOTE_ADDR'];
+}
+
+function sanitize_string($input)
+{
+    return filter_var($input, FILTER_SANITIZE_STRING);
+}
+function loadEnv($file)
+{
+    if (!is_readable($file)) {
+        throw new \InvalidArgumentException('No se puede leer el archivo .env');
+    }
+
+    $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) {
+            continue; // Ignora las líneas comentadas
+        }
+
+        list($name, $value) = explode('=', $line, 2);
+        $name = trim($name);
+        $value = trim($value);
+
+        if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
+            putenv(sprintf('%s=%s', $name, $value)); // Exporta la variable de entorno
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+    }
+}
+loadEnv('./.env');
+
+$_SESSION['licencia'] = 1;
+
+
+$dbh_plataforma = new PDO('mysql:host=' . $_ENV['DB_HOST_PLATAFORMA'] . ';dbname=' . $_ENV['DB_NAME_PLATAFORMA'] . ';charset=UTF8', $_ENV['DB_USER_PLATAFORMA'], $_ENV['DB_PASS_PLATAFORMA'], array(
+    PDO::ATTR_PERSISTENT => true,
+));
+$dbh_plataforma->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+
+if (!empty($_SESSION['licencia'])) {
+
+    $db  = $dbh_plataforma->prepare("select * from sistema_empresa_licencias where rowid = :licencia ");
+    $db->bindValue(":licencia", $_SESSION['licencia'], PDO::PARAM_STR);
+    $db->execute();
+    $row = $db->fetch(PDO::FETCH_ASSOC);
+
+    $dbh = new PDO('mysql:host=' . $row['server'] . ';dbname=' . sanitize_string($row['bd']) . ';charset=UTF8', sanitize_string($row['user']),  sanitize_string($row['pass']), array(
+        PDO::ATTR_PERSISTENT => true,
+    ));
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+
+    unset($row);
+}
+
+
+
+function get_current_date_time()
+{
+    $date = date('Y_m_d_H_m_s');
+    return $date;
+}
+
+
+function help()
+{
+
+    echo "# Artesano para migraciones...\n\n";
+    echo "\tphp artesan crear:migracion  -- crea archivo sql en la carpeta de migraciones\n";
+    echo "\tphp artesan ejecutar:migracion -- ejecuta las migraciones\n";
+    echo "\tphp artesano crear:tabla-migraciones -- crea la tabla donde guarda las migraciones \n";
+    echo "\n";
+    echo "\n";
+    echo "\n";
+}
+
+function create_migration($name, $path)
+{
+
+    $title = get_current_date_time() . '_' . $name . '.sql';
+    echo "\n\n\n\n";
+    echo $title;
+    echo "\n\n\n\n";
+
+
+    $file_path = $path . '/' . $title;
+
+    $file = fopen($file_path, 'w+');
+
+    $texto = "--  {$name} ";
+    fwrite($file, $texto);
+
+    fclose($file);
+}
+
+function get_migrations($dbh)
+{
+    $migraciones = [];
+
+    $sql =  "select * from migraciones ";
+
+    $db = $dbh->prepare($sql);
+    $db->execute();
+
+    while ($data   = $db->fetch(PDO::FETCH_OBJ)) {
+        $migraciones[] = $data->nombre;
+    }
+
+    return $migraciones;
+}
+
+function exists_migration($dbh, $migration_name)
+{
+    $sql = "SELECT COUNT(*) FROM migraciones WHERE nombre = :nombre";
+
+    $stmt = $dbh->prepare($sql);
+    $stmt->bindParam(':nombre', $migration_name);
+
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return (int)$result['COUNT(*)'] > 0;
+}
+
+function run_sql_migraction($dbh, $sql)
+{
+
+    $stmt = $dbh->prepare($sql);
+    $resullt = $stmt->execute();
+
+    return  $resullt;
+}
+
+function save_migrations($dbh, $migration)
+{
+    $insert_query = "
+        INSERT INTO migraciones (nombre)
+        VALUES (:nombre)
+    ";
+
+    $stmt = $dbh->prepare($insert_query);
+    $stmt->bindValue(':nombre', $migration);
+
+    $res = $stmt->execute();
+
+
+    return  $res;
+}
+
+function create_table_migrations($dbh){
+    $sql = "
+        CREATE TABLE `migraciones` (
+            `rowid` int NOT NULL AUTO_INCREMENT,
+            `nombre` varchar(500) DEFAULT NULL,
+            `status` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT '1',
+            `fecha_creacion` datetime DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (`rowid`)
+        ) 
+        ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    ";
+
+    $stmt = $dbh->prepare($sql);
+    $res = $stmt->execute();
+    return  $res;
+}
+
+function run_migrations($path, $dbh)
+{
+
+    $files = scandir($path);
+
+    foreach ($files as $file) {
+        if ($file != '.' && $file != '..') {
+
+            if (exists_migration($dbh, $file)) break;
+
+            echo $file;
+            echo "\n";
+
+            $handle = fopen($path . '/' . $file, 'r');
+
+            if ($handle) {
+                $sql = '';
+                while (($line = fgets($handle)) !== false) {
+                    $sql .= $line;
+                }
+                fclose($handle);
+                if (run_sql_migraction($dbh, $sql))
+                    save_migrations($dbh, $file);
+            }
+        }
+    }
+}
+
+function show_migrations($dbh){
+    $mm = get_migrations($dbh);
+
+    foreach($mm as $m){
+        echo $m;
+        echo "\n";
+    }
+}
+
+
+if(count($argv) < 2) {
+    help();
+    exit;
+}
+
+
+
+if ($argv[1] == 'crear:migracion') {
+    $name = $argv[2];
+    if (!$name) {
+        echo "Falta el nombre de la migracion";
+        return;
+    }
+    create_migration($name, $path);
+} else if ($argv[1] == 'ejecutar:migracion') {
+    run_migrations($path,  $dbh);
+} else if ($argv[1] == 'mostrar:migraciones') {
+    show_migrations($dbh);
+
+
+} 
+else if ($argv[1] == 'crear:tabla-migraciones') {
+    create_table_migrations($dbh);
+    
+}else {
+
+    help();
+}
+

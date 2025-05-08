@@ -1,0 +1,487 @@
+
+RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteRule ^salir/?$                        mod_login/ajax/logout.php
+RewriteRule ^login/?$                        login.php
+
+#productos
+RewriteRule ^productos_listado/?$  dashboard.php?accion=productos_listado
+RewriteRule ^productos_nuevo/?$  dashboard.php?accion=productos_editar
+RewriteRule ^productos_editar/(\w+)/?$  dashboard.php?accion=productos_editar&fiche=$1
+RewriteRule ^servir_imagenes_productos/?$  mod_productos/ajax/servir_imagenes_productos.php
+RewriteRule ^productos_movimientos/(\w+)/?$  dashboard.php?accion=productos_movimientos?id_producto=$1
+
+
+#clientes
+RewriteRule ^clientes_listado/?$  dashboard.php?accion=clientes_listado
+RewriteRule ^clientes_nuevo/?$  dashboard.php?accion=clientes_editar
+RewriteRule ^clientes_editar/(\w+)/?$  dashboard.php?accion=clientes_editar&fiche=$1
+
+#categoria cliente
+RewriteRule ^cliente_categorias/?$    			dashboard.php?accion=cliente_categorias
+RewriteRule ^editar_cliente_categoria/(\w+)/?$    	dashboard.php?accion=editar_cliente_categoria&fiche=$1
+RewriteRule ^crear_cliente_categoria/?$               dashboard.php?accion=crear_cliente_categoria
+
+#formas pago
+RewriteRule ^formas_pago/?$    			dashboard.php?accion=formas_pago
+RewriteRule ^editar_forma_pago/(\w+)/?$    	dashboard.php?accion=editar_forma_pago&fiche=$1
+RewriteRule ^crear_forma_pago/?$               dashboard.php?accion=crear_forma_pago
+
+#proveedores
+RewriteRule ^proveedores_listado/?$  dashboard.php?accion=proveedores_listado
+RewriteRule ^proveedores_nuevo/?$  dashboard.php?accion=proveedores_editar
+RewriteRule ^proveedores_editar/(\w+)/?$  dashboard.php?accion=proveedores_editar&fiche=$1
+
+
+#compras por empresa (proveedor)
+RewriteRule ^compras_por_empresa/(\w+)/?$  dashboard.php?accion=compras_por_empresa&fiche=$1
+ 
+
+## 🛠 CC Travel Modulos disponibles 
+
+RewriteRule ^listado_turisticos/?$             dashboard.php?accion=listado_turisticos
+RewriteRule ^turistico/(\w+)/?$                dashboard.php?accion=turistico&id=$1
+RewriteRule ^turistico_editar/(\w+)/?$         dashboard.php?accion=turistico_editar&id=$1
+#RewriteRule ^nuevo_turisticos/?$               dashboard.php?accion=turistico_editar
+RewriteRule ^turistico_crear/?$               dashboard.php?accion=turistico_crear
+RewriteRule ^agenda/?$                        dashboard.php?accion=agenda
+RewriteRule ^notificaciones_cc/?$             dashboard.php?accion=notificaciones_cc
+RewriteRule ^reservas/?$                      dashboard.php?accion=reservas
+RewriteRule ^nueva_reserva/(\w+)/?$                dashboard.php?accion=nueva_reserva&id=$1
+RewriteRule ^ver_reserva/(\w+)/?$                dashboard.php?accion=ver_reserva&id=$1
+RewriteRule ^modificar_reserva/(\w+)/?$                dashboard.php?accion=modificar_reserva&id=$1
+
+RewriteRule ^turistico_nueva_cotizacion/?$               dashboard.php?accion=turistico_nueva_cotizacion
+RewriteRule ^turistico_ver_cotizacion/(\w+)/?$                dashboard.php?accion=turistico_ver_cotizacion&id=$1
+RewriteRule ^turistico_modificar_cotizacion/(\w+)/?$         dashboard.php?accion=turistico_modificar_cotizacion&id=$1
+RewriteRule ^consideraciones_cancelaciones/?$               dashboard.php?accion=consideraciones_cancelaciones
+RewriteRule ^reporte_cotizaciones/?$                        dashboard.php?accion=reporte_cotizaciones
+RewriteRule ^reporte_reservas/?$                        dashboard.php?accion=reporte_reservas
+
+
+
+## Reportes IVA
+ 
+RewriteRule ^iva_balance/?$             dashboard.php?accion=iva_balance
+RewriteRule ^iva_ventas/?$              dashboard.php?accion=iva_ventas
+RewriteRule ^iva_ventas_detalle/?$      dashboard.php?accion=iva_ventas_detalle
+RewriteRule ^iva_compras_detalle/?$     dashboard.php?accion=iva_compras_detalle
+RewriteRule ^iva_compras/?$             dashboard.php?accion=iva_compras
+
+## Reportes Renerales
+RewriteRule ^reporte_categorias/?$      dashboard.php?accion=reporte_categorias
+RewriteRule ^reporte_consolidado/?$      dashboard.php?accion=reporte_consolidado
+
+## Facturas periodicas
+RewriteRule ^facturas_periodicas/?$      dashboard.php?accion=facturas_periodicas
+RewriteRule ^factura_periodica/([^/]+)(?:/([^/]+))?      dashboard.php?accion=factura_periodica&id=$1
+
+
+RewriteRule ^pdf/(\w+)/?$  include/pdflib/generar.php?id=$1
+RewriteRule ^pdf_web/(\w+)/(\w+)/?$  include/pdflib/generar_web_2.php?id=$1&a=$2
+RewriteRule ^pdf_web_ideas/(\w+)/(\w+)/?$  include/pdflib/generar_web_ideas.php?id=$1&a=$2
+ 
+
+RewriteRule ^nota_cd/(\w+)?$   include/pdflib/generarNotas.php?id=$1
+RewriteRule ^nota_cd_web/(\w+)/(\w+)/?$  include/pdflib/generar_nota_web.php?id=$1&a=$2
+  
+
+RewriteRule ^factura/(\w+)/(\w+)/?$  mod_qr/qr/factura.php?facturamd5=$1&clave=$2
+ 
+
+RewriteRule ^nota_xml/(\w+)/(\w+)/?$  mod_qr/qr/nota.php?notamd5=$1&clave=$2
+RewriteRule ^nota_xml_ideas/(\w+)/(\w+)/?$  mod_qr_ideas/qr/nota_ideas.php?notamd5=$1&clave=$2
+RewriteRule ^nota_xml_pilones2/(\w+)/(\w+)/?$  mod_qr_pilones2/qr/nota_pilones2.php?notamd5=$1&clave=$2
+
+
+RewriteRule ^comprobante/(\w+)/(\w+)/?$  mod_qr/qr/comprobante.php?facturamd5=$1&clave=$2
+RewriteRule ^comprobante_hidalgo/(\w+)/(\w+)/?$  mod_qr/qr/comprobante_hidalgo.php?facturamd5=$1&clave=$2
+RewriteRule ^comprobante_ideas/(\w+)/(\w+)/?$  mod_qr/qr/comprobante_ideas.php?facturamd5=$1&clave=$2
+RewriteRule ^comprobante_pilones2/(\w+)/(\w+)/?$  mod_qr/qr/comprobante_pilones2.php?facturamd5=$1&clave=$2
+
+
+RewriteRule ^comprobante_nota_universal/(\w+)/(\w+)/?$  mod_qr/qr/mensajehacienda_universal.php?facturamd5=$1&clave=$2
+RewriteRule ^comprobante_nota/(\w+)/(\w+)/(\w+)/?$  mod_qr/qr/comprobante_nota.php?facturamd5=$1&clave=$2&tipo=$3
+RewriteRule ^comprobante_nota_ideas/(\w+)/(\w+)/(\w+)/?$  mod_qr/qr/comprobante_nota_ideas.php?facturamd5=$1&clave=$2&tipo=$3
+RewriteRule ^comprobante_nota_pilones2/(\w+)/(\w+)/(\w+)/?$  mod_qr/qr/comprobante_nota_pilones2.php?facturamd5=$1&clave=$2&tipo=$3
+
+
+RewriteRule ^fac/(\w+)/?$  dashboard.php?accion=ver_factura&fiche=$1
+RewriteRule ^fac/imprimir/(\w+)/?$  dashboard.php?accion=ver_factura&fiche=$1&imprimir=true
+
+
+
+
+##
+## Vamos metiendo Mejoras para la parte electronica
+## Nota de Credito o debito
+##   
+##
+RewriteRule ^nueva_nota/?$  dashboard.php?accion=nueva_nota
+RewriteRule ^nota_ajax/?$  mod_notas_credito_debido/ajax/guardar_cambio_x_ajax.php
+RewriteRule ^generar_nueva_nota/?$  mod_notas_credito_debido/class/generar.php
+RewriteRule ^detalle_documento/?$  mod_notas_credito_debido/ajax/mostrar_detalle.php
+RewriteRule ^nota/(\w+)/?$   dashboard.php?accion=ver_nota&fiche=$1
+RewriteRule ^eliminar_nota/(\w+)/?$   mod_notas_credito_debido/class/eliminar.php?id=$1
+RewriteRule ^nota_validar/(\w+)/?$   dashboard.php?accion=nota_validar&fiche=$1
+  
+##
+##  Compras Simplificadas , otra Genialidad de 4.3 
+##
+##
+RewriteRule ^simplificadas/?$        dashboard.php?accion=simplificadas
+RewriteRule ^simplificadas/(\w+)/?$  dashboard.php?accion=simplificadas&pagina=$1
+RewriteRule ^nueva_simplificada/?$   dashboard.php?accion=nueva_simplificada
+RewriteRule ^simplificada/(\w+)/?$   dashboard.php?accion=simplificada&fiche=$1
+RewriteRule ^simplificada_validar/(\w+)/?$   dashboard.php?accion=simplificada_validar&fiche=$1
+
+
+
+
+RewriteRule ^factura_listado/?$   dashboard.php?accion=factura_listado
+RewriteRule ^factura_listado_dev/?$   dashboard.php?accion=factura_listado_dev
+RewriteRule ^factura_listado/(\w+)/?$   dashboard.php?accion=factura_listado&pagina=$1
+
+RewriteRule ^facturas_cobrar/?$   dashboard.php?accion=facturas_cobrar
+
+
+RewriteRule ^compra_listado/?$   dashboard.php?accion=compra_listado
+RewriteRule ^nueva_compra/?$    dashboard.php?accion=ver_compra
+RewriteRule ^compra/(\w+)/?$    dashboard.php?accion=ver_compra&fiche=$1
+
+  
+RewriteRule ^factura_listado_debito/(\w+)/?$   dashboard.php?accion=factura_listado_debito&pagina=$1
+RewriteRule ^factura_listado_credito/(\w+)/?$   dashboard.php?accion=factura_listado_credito&pagina=$1
+ 
+
+RewriteRule ^factura_campos_extra/(\w+)/?$    dashboard.php?accion=factura_campos_extra&tabla=fi_europa_facturas&fiche=$1
+RewriteRule ^factura/(\w+)/?$    dashboard.php?accion=ver_factura&fiche=$1
+RewriteRule ^factura/(\w+)/regenerar/?$    dashboard.php?accion=ver_factura&fiche=$1&regenerar=1
+RewriteRule ^nueva_factura/?$    dashboard.php?accion=ver_factura
+
+RewriteRule ^inicio/?$  dashboard.php
+RewriteRule ^comprobar/?$  dashboard.php?accion=comprobar
+
+RewriteRule ^viaje/(\w+)/?$    dashboard.php?accion=ver_viaje&fiche=$1
+RewriteRule ^listado_viaje/?$    dashboard.php?accion=listado_viaje
+RewriteRule ^crear_nuevo_viaje/?$    dashboard.php?accion=crear_nuevo_viaje
+
+RewriteRule ^recibir_documento/?$   dashboard.php?accion=recibir_documento
+RewriteRule ^procesar_documento/?$  mod_recepcion/class/procesar.php
+RewriteRule ^documento/(\w+)/?$    dashboard.php?accion=documento&id=$1
+RewriteRule ^recibido_listado_compras/?$   dashboard.php?accion=recibido_listado_compras
+RewriteRule ^recibido_listado_credito/?$   dashboard.php?accion=recibido_listado_credito
+RewriteRule ^recibido_listado_debito/?$   dashboard.php?accion=recibido_listado_debito
+RewriteRule ^recibido_listado/?$   dashboard.php?accion=recibido_listado
+
+RewriteRule ^eliminar_documento_recibido/(\w+)/?$    mod_recepcion/class/eliminar.php?id=$1
+RewriteRule ^recibido_listado/eliminado_exito/?$   dashboard.php?accion=recibido_listado&alerta_eliminado=true
+
+
+
+
+
+RewriteRule ^aceptar/(\w+)/(\w+)/?$   mod_recepcion/class/recibir.php?id=$1&tipo=$2&accion=aceptar
+RewriteRule ^rechazar/(\w+)/(\w+)/?$   mod_recepcion/class/recibir.php?id=$1&tipo=$2&accion=rechazar
+
+
+
+
+RewriteRule ^producto_eliminar/(\w+)/?$    dashboard.php?accion=eliminar_producto&id=$1
+
+
+RewriteRule ^facturar/(\w+)/(\w+)/?$    mod_facturacion/ajax/facturar.mejora.electronica.php?id=$1&tipo=$2
+
+
+
+############################################################################
+##
+## Modulo de Gastos
+##
+RewriteRule ^informe_gastos/?$    dashboard.php?accion=informe_gastos
+RewriteRule ^gastos/?$  dashboard.php?accion=gasto_listado
+RewriteRule ^gastos/(\w+)/?$  dashboard.php?accion=gasto_listado&pagina=$1
+RewriteRule ^gastos/(\w+)/(\w+)/?$  dashboard.php?accion=gasto_listado&pagina=$1&criterio=$2
+RewriteRule ^gasto/(\w+)/?$  dashboard.php?accion=ver_gasto&perfil=$1
+
+## --
+RewriteRule ^gastos_categorias/?$       dashboard.php?accion=gastos_categorias
+RewriteRule ^gastos_listado/?$          dashboard.php?accion=gastos_listado
+RewriteRule ^gastos_crear_nuevo/?$      dashboard.php?accion=ver_gasto
+RewriteRule ^ver_gasto/(\w+)/?$  dashboard.php?accion=ver_gasto&fiche=$1
+
+
+
+
+RewriteRule ^informe_ventas/?$    dashboard.php?accion=informe_ventas
+RewriteRule ^informe_compras_simplicadas/(\w+)/?$    dashboard.php?accion=informe_compras_simplicadas&tipoReporte=$1
+RewriteRule ^informe_ventas_admin/(\w+)/?$    dashboard.php?accion=informe_ventas_admin&tipoReporte=$1
+RewriteRule ^informe_compras_admin/(\w+)/?$    dashboard.php?accion=informe_compras_admin&tipoReporte=$1
+RewriteRule ^informe_pendientes_pago_admin/(\w+)/?$    dashboard.php?accion=informe_pendientes_pago_admin&tipoReporte=$1
+
+RewriteRule ^salir/?$  authorice/logout.php
+RewriteRule ^configuracion/?$  dashboard.php?accion=configuracion
+RewriteRule ^configuracion_1/?$  dashboard.php?accion=configuracion_1
+
+RewriteRule ^llamadas/(\w+)/?$    dashboard.php?accion=llamadas&id=$1
+
+RewriteRule ^exportar_producto_impuesto/?$    excel/productos/productos_impuestos.php
+
+
+
+## 5 Julio 2020 - Mejoras en Exoneracion 
+RewriteRule ^registrar_exoneracion_manual/(\w+)/?$    mod_exoneracion/class/reenviar.a.cliente.php?factura=$1
+
+#Mod usuarios
+RewriteRule ^usuarios_listado/?$    			dashboard.php?accion=usuarios_listado
+
+#Mod usuarios
+RewriteRule ^usuario_editar/(\w+)/?$    			dashboard.php?accion=usuario_editar&fiche=$1
+RewriteRule ^usuario_crear/?$    			dashboard.php?accion=usuario_crear
+
+
+## 31 Agosto 2021
+## Mejora en CRM 
+## Julio desde Maracay - Venezuela 
+## Por Culpa de un camion que tiro el cable de internet 
+RewriteRule ^contactos_crm/?$    		        dashboard.php?accion=contactos_crm
+RewriteRule ^editar_contactos_crm/(\w+)/?$    	dashboard.php?accion=editar_contactos_crm&id=$1
+RewriteRule estado_crm/?$    			        dashboard.php?accion=estado_crm
+RewriteRule ^actividades_crm/?$    		        dashboard.php?accion=actividades_crm
+RewriteRule ^flujo_crm/?$    		            dashboard.php?accion=flujo_crm
+RewriteRule ^forecast_crm/?$    		        dashboard.php?accion=forecast_crm
+RewriteRule ^forecast_detalle/?$    		    dashboard.php?accion=forecast_detalle
+RewriteRule ^empresas_crm/?$    		        dashboard.php?accion=empresas_crm
+RewriteRule ^editar_empresas_crm/(\w+)/?$    	dashboard.php?accion=editar_empresas_crm&id=$1
+
+
+## 24 Mayo 2024
+## Nuevas rutas
+## Julio desde Maracay - Venezuela 
+RewriteRule ^mi_perfil/?$    		        dashboard.php?accion=mi_perfil
+
+
+
+## 5 Diciembre 2021
+## Mejora en configuracion
+## Marin desde Venezuela - Un domingo !!! 
+RewriteRule ^configuracion/?$  dashboard.php?accion=configuracion
+RewriteRule ^configuracion_empresa/?$  dashboard.php?accion=configuracion_empresa
+
+
+RewriteRule ^configuracion_1/?$  dashboard.php?accion=configuracion_1
+RewriteRule ^permisos/ dashboard.php?accion=permisos
+
+RewriteRule ^nuevo_perfil  dashboard.php?accion=nuevo_perfil
+RewriteRule ^ver_perfil  dashboard.php?accion=ver_perfil
+
+RewriteRule ^pais/ dashboard.php?accion=pais
+
+RewriteRule ^factura/(\w+)/?$    dashboard.php?accion=ver_factura&fiche=$1
+
+RewriteRule ^presupuesto_listado/?$                        dashboard.php?accion=presupuesto_listado
+RewriteRule ^ver_presupuesto/(\w+)/?$  dashboard.php?accion=ver_presupuesto&fiche=$1
+RewriteRule ^nuevo_presupuesto/?$               dashboard.php?accion=ver_presupuesto
+RewriteRule ^presupuesto/(\w+)/?$    dashboard.php?accion=ver_presupuesto&fiche=$1
+
+
+ 
+#funnel
+RewriteRule ^funnel_listado/?$   dashboard.php?accion=funnel_listado
+RewriteRule ^ver_funnel/(\w+)/?$    dashboard.php?accion=ver_funnel&id=$1
+
+
+
+#contactos crm
+RewriteRule ^contactos_crm_listado/?$   dashboard.php?accion=contactos_crm_listado
+RewriteRule ^contactos_crm_editar/(\w+)/?$    dashboard.php?accion=contactos_crm_editar&fiche=$1
+RewriteRule ^contactos_crm_nuevo/?$    dashboard.php?accion=contactos_crm_editar
+
+#agentes
+RewriteRule ^agentes_listado/?$  dashboard.php?accion=agentes_listado
+RewriteRule ^agentes_nuevo/?$  dashboard.php?accion=agentes_nuevo
+RewriteRule ^agentes_editar/(\w+)/?$  dashboard.php?accion=agentes_editar&fiche=$1
+
+#CRM 
+RewriteRule ^lead_gestion/(\w+)/?$  dashboard.php?accion=lead_gestion&fiche=$1
+RewriteRule ^oportunidades/?$  dashboard.php?accion=oportunidades
+RewriteRule ^ver_oportunidad/(\w+)/?$    dashboard.php?accion=ver_oportunidad&id=$1
+RewriteRule ^ver_oportunidad/(\w+)/(\w+)/?$    dashboard.php?accion=ver_oportunidad&id=$1&fiche_tarea=$2
+
+RewriteRule ^modificar_oportunidad/(\w+)/?$    dashboard.php?accion=modificar_oportunidad&id=$1
+RewriteRule ^mis_pendientes/(\w+)/?$    dashboard.php?accion=mis_pendientes&id=$1
+RewriteRule ^nueva_oportunidad/?$    dashboard.php?accion=nueva_oportunidad
+
+
+
+
+
+#AVATARIMAGEN
+RewriteRule ^servir_imagenes_avatar/?$  mod_perfiles/ajax/servir_imagenes_avatar.php
+ 
+# QUICKBOOKS
+RewriteRule ^configuracion_quickbooks/?$   dashboard.php?accion=quickbooks
+
+
+# QUICKBOOKS
+
+# CRM
+RewriteRule ^agenda/?$             dashboard.php?accion=agenda
+
+
+#CRM
+RewriteRule ^cron_actividades/?$   mod_tareas_programadas/crm/email_notificador.actividades.php
+
+
+#CRM
+RewriteRule ^actividades/?$   dashboard.php?accion=crm_actividades
+
+#CRM - FUNNELS  CANVAN
+RewriteRule ^funnel/(\w+)/?$  dashboard.php?accion=lead_gestion&fiche=$1
+
+#EMPRESA
+RewriteRule ^empresa/?$   dashboard.php?accion=empresa
+RewriteRule ^empresa_listado/?$   dashboard.php?accion=empresa_listado
+
+
+   
+ #AVATARIMAGENEMPRESA
+RewriteRule ^servir_imagenes_avatar_empresa/?$  mod_empresa/ajax/servir_imagenes_avatar_empresa.php
+  
+
+
+#Mod Periles / Listar los perfils de usuarios
+RewriteRule ^perfiles_listado/?$    			dashboard.php?accion=perfiles_listado
+RewriteRule ^perfil_crear/?$    	dashboard.php?accion=editar_perfil
+RewriteRule ^perfil_editar/(\w+)/?$    	dashboard.php?accion=editar_perfil&fiche=$1
+
+
+
+#Mod Bancos / Listar bancos
+RewriteRule ^bancos_listado/?$    			dashboard.php?accion=bancos_listado
+RewriteRule ^banco_crear/?$    	dashboard.php?accion=editar_banco
+RewriteRule ^banco_editar/(\w+)/?$    	dashboard.php?accion=editar_banco&fiche=$1
+
+#Mod prioridades
+RewriteRule ^prioridades_listado/?$    			dashboard.php?accion=prioridades_listado
+
+
+#Mod lista precios
+RewriteRule ^listas_precios/?$    			dashboard.php?accion=listas_precios
+
+#Mod bodegas
+RewriteRule ^bodega_listado/?$    			dashboard.php?accion=bodega_listado
+
+
+
+#Mod prioridades
+RewriteRule ^monedas_listado/?$    			dashboard.php?accion=monedas_listado
+
+
+
+
+#Mod Categorias / Listar Categorias
+RewriteRule ^categorias_producto_listado/?$    			dashboard.php?accion=categorias_producto_listado
+RewriteRule ^categoria_producto_crear/?$    	dashboard.php?accion=editar_producto_categoria
+RewriteRule ^categoria_producto_editar/(\w+)/?$    	dashboard.php?accion=editar_producto_categoria&fiche=$1
+
+
+
+#Mod catalogos
+RewriteRule ^catalogo_listado/?$    			dashboard.php?accion=catalogo_listado
+RewriteRule ^categoria_crm_categorias/?$    			dashboard.php?accion=categoria_crm_categorias
+
+#Mod Rutas
+RewriteRule ^rutas_listado/?$    			dashboard.php?accion=rutas_listado
+
+
+
+#Agente Rutas
+RewriteRule ^agente_rutas/?$    			dashboard.php?accion=agente_rutas
+#Mod Direcciones
+
+
+RewriteRule ^direcciones/?$    			dashboard.php?accion=direcciones
+
+#Medios Pago
+RewriteRule ^medios_pago/?$    			dashboard.php?accion=medios_pago
+
+
+
+#Configuracion parametros
+RewriteRule ^configuracion_parametros/?$    			dashboard.php?accion=configuracion_parametros
+
+#informes iva
+RewriteRule ^reportes_iva/?$    			dashboard.php?accion=reportes_iva
+
+#reportes
+RewriteRule ^reportes/?$    			dashboard.php?accion=reportes
+
+
+
+#albaranes Version Europa 
+#20 Enero 2024
+RewriteRule ^nuevo_albaran/?$   dashboard.php?accion=nuevo_albaran
+RewriteRule ^albaranes_listado/?$   dashboard.php?accion=albaranes_listado
+RewriteRule ^ver_albaran/(\w+)/?$    dashboard.php?accion=ver_albaran&fiche=$1
+RewriteRule ^validar_albaran/(\w+)/?$    dashboard.php?accion=validar_albaran&fiche=$1
+RewriteRule ^albaran_compra/(\w+)/?$    dashboard.php?accion=ver_albaran&fiche=$1
+
+
+#Proyecto
+RewriteRule ^proyecto_listado/?$          dashboard.php?accion=proyecto_listado
+RewriteRule ^proyecto_crear_nuevo/?$      dashboard.php?accion=proyecto_crear_nuevo
+RewriteRule ^ver_proyecto/(\w+)/?$  dashboard.php?accion=ver_proyecto&fiche=$1
+RewriteRule ^editar_proyecto/(\w+)/?$  dashboard.php?accion=ver_proyecto&fiche=$1
+#Mod Tipo Actividad
+RewriteRule ^actividad_listado/?$    			dashboard.php?accion=actividad_listado
+
+
+#albaranes venta Version Europa 
+#31 Enero 2024
+RewriteRule ^nuevo_albaran_venta/?$   dashboard.php?accion=nuevo_albaran_venta
+RewriteRule ^albaran_venta_listado/?$   dashboard.php?accion=albaran_venta_listado
+RewriteRule ^ver_albaran_venta/(\w+)/?$    dashboard.php?accion=ver_albaran_venta&fiche=$1
+RewriteRule ^validar_albaran_venta/(\w+)/?$    dashboard.php?accion=validar_albaran_venta&fiche=$1
+RewriteRule ^albaran_venta/(\w+)/?$    dashboard.php?accion=ver_albaran_venta&fiche=$1
+RewriteRule ^log/(\w+)/(\w+)/?$        dashboard.php?accion=log_documento_mercantil&tipo=$1&fiche=$2
+
+
+
+#Pedidos  Version Europa 
+#31 Enero 2024
+RewriteRule ^nuevo_pedido/?$   dashboard.php?accion=nuevo_pedido
+RewriteRule ^pedido_listado/?$   dashboard.php?accion=pedido_listado
+RewriteRule ^ver_pedido/(\w+)/?$    dashboard.php?accion=ver_pedido&fiche=$1
+RewriteRule ^validar_pedido/(\w+)/?$    dashboard.php?accion=validar_pedido&fiche=$1
+RewriteRule ^pedido/(\w+)/?$    dashboard.php?accion=ver_pedido&fiche=$1
+
+
+## Facturas 
+## 6 Febrero 2025
+RewriteRule ^anular_factura/(\w+)/?$    dashboard.php?accion=anular_factura&fiche=$1
+
+
+#Mod Tiempo entrega - Oportunidades
+RewriteRule ^tiempo_entrega_listado/?$    			dashboard.php?accion=tiempo_entrega
+
+
+#Mod Tiempo validez_oferta - Oportunidades
+RewriteRule ^validez_oferta_listado/?$    			dashboard.php?accion=validez_oferta
+
+#Mod Gestion de Plantillas
+RewriteRule ^plantillas_listado/?$    			dashboard.php?accion=plantillas_listado
+
+# Para validar Creacion de Usuario
+RewriteRule ^validar_email/(.+)/?$    dashboard.php?accion=validar_email&token=$1
+
+RewriteRule ^anular_albaran_compra/(\w+)/?$            dashboard.php?accion=anular_albaran_compra&fiche=$1
+RewriteRule ^anular_albaran_compra/(\w+)/(\w+)/?$      dashboard.php?accion=anular_albaran_compra&fiche=$1&motivo=$2
+
+RewriteRule ^cancelar_albaran_compra/(\w+)/?$    dashboard.php?accion=cancelar_albaran_compra&fiche=$1
+RewriteRule ^anular_compra/(\w+)/?$    dashboard.php?accion=anular_compra&fiche=$1
+RewriteRule ^cancelar_compra/(\w+)/?$    dashboard.php?accion=cancelar_compra&fiche=$1
+
+RewriteRule ^log_cambios    			dashboard.php?accion=log_cambios

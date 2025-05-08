@@ -1,0 +1,13 @@
+
+RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteRule ^salir/?$                        mod_login/ajax/logout.php
+RewriteRule ^login/?$                        login.php
+
+
+
+#Mod errores
+RewriteRule ^listado_errores/?$  dashboard.php?accion=listado_errores
+

@@ -1,0 +1,92 @@
+<?php
+    $css =  ENLACE_WEB.'bootstrap/css/crm.css';
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
+
+<!-- Menú flotante dentro del li con clases únicas -->
+ <div class="custom-dropdown-menu">
+
+        <div class="" style="text-align: center;margin-bottom: 15px; font-size: 20px;">
+           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-configuracion">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Configuración</span>
+            </div>
+
+
+                <div class="custom-menu-icons">
+                    <div class="custom-menu-item">
+                        <a  url="formas_pago" href="<?= ENLACE_WEB ?>formas_pago">
+                            <i class="fas fa-money-check-alt"></i>
+                            <span>Forma de pago</span>
+                        </a>
+                    </div>
+                    <div class="custom-menu-item">
+                        <a url="categorias_producto_listado" href="<?= ENLACE_WEB ?>categorias_producto_listado">
+                            <i class="fas fa-tags"></i>
+                            <span>Categorías productos</span>
+                        </a>
+                    </div>
+                    <div class="custom-menu-item">
+                        <a url="cliente_categorias" href="<?= ENLACE_WEB ?>cliente_categorias">
+                            <i class="fas fa-users-cog"></i>
+                            <span>Categorías Clientes</span>
+                        </a>
+                    </div>
+                    <div class="custom-menu-item">
+                        <a url="prioridades_listado" href="<?= ENLACE_WEB ?>prioridades_listado">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Diccionario Prioridades</span>
+                        </a>
+                    </div>
+                    <div class="custom-menu-item">
+                        <a url="monedas_listado" href="<?= ENLACE_WEB ?>monedas_listado">
+                            <i class="fas fa-coins"></i>
+                            <span>Diccionario Moneda</span>
+                        </a>
+                    </div>
+                    <div class="custom-menu-item">
+                        <a url="catalogo_listado" href="<?= ENLACE_WEB ?>catalogo_listado">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>Unidad medida</span>
+                        </a>
+                    </div>
+                    <div class="custom-menu-item">
+                        <a url="bancos_listado" href="<?= ENLACE_WEB ?>bancos_listado">
+                            <i class="fas fa-university"></i>
+                            <span>Diccionario de Bancos</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+<script>
+jQuery(document).ready(function($){
+    $('.custom-menu-flotante').on('click', function() {
+        if($(".custom-dropdown-menu").is(':visible') === true)
+        {
+            $('.custom-dropdown-menu').fadeOut(200);
+        }else{
+            $('.custom-dropdown-menu').fadeIn(200);
+        }
+    });
+
+    // Obtener la URL actual
+    var currentUrl = window.location.pathname.split('/').pop();
+   
+    // Iterar sobre cada enlace del menú
+    $('.custom-menu-item').each(function() {
+        var linkUrl = $(this).find("a").attr('url');
+        // Verificar si el enlace es similar a la URL actual
+        if (linkUrl === currentUrl) {
+            $(this).addClass('activo'); // Agregar clase activa
+        }
+    });
+
+
+});
+ 
+</script>

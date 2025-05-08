@@ -1,0 +1,12 @@
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .basic-map {
+        width: 100% !important; /* Ancho 100% en dispositivos móviles */
+    }
+    .botonera-footer .btn{
+    	width: 100% !important;
+        display: block !important;
+    	margin-bottom: 10px;
+    }
+}
